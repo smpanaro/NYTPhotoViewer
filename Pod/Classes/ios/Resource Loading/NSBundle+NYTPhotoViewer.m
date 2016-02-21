@@ -15,8 +15,10 @@
     static NSBundle *resourceBundle = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString *resourceBundlePath = [[NSBundle bundleForClass:[NYTPhotosViewController class]] pathForResource:@"NYTPhotoViewer" ofType:@"bundle"];
+        NSBundle* frameworkBundle = [NSBundle bundleForClass:[NYTPhotosViewController class]]; // carthage
+        NSString *resourceBundlePath = [frameworkBundle pathForResource:@"NYTPhotoViewer" ofType:@"bundle"]; // cocoapods
         resourceBundle = [self bundleWithPath:resourceBundlePath];
+        resourceBundle = resourceBundle ? resourceBundle : frameworkBundle;
     });
     return resourceBundle;
 }
